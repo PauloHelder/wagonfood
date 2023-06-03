@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Plan;
 use App\Providers\RouteServiceProvider;
+use App\Services\TenantService;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -51,8 +53,10 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
+            'nif' => ['nullable','unique:tenants'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'empresa' => ['required', 'string', 'min:3', 'unique:tenants,name'],
         ]);
     }
 
@@ -64,10 +68,14 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+
+       if(!$plan = session('plan')){
+           return redirect()->route('site.home')->with('message','por favor escolha um tema');
+       } 
+        dd($plan);
+        $tenantService = app(TenantService::class);
+        $user = $tenantService->make($plan, $data);
+
+        return $user;
     }
 }
