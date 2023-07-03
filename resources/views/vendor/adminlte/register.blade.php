@@ -1,3 +1,6 @@
+<?
+    echo 
+?>
 @extends('adminlte::master')
 
 @section('adminlte_css')

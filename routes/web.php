@@ -4,6 +4,26 @@ Route::prefix('admin')
         ->namespace('Admin')
         ->group(function(){
 
+             /**
+             * Rotas Produtsc
+             */
+            Route::any('products/search', 'ProductController@search')->name('products.search');
+            Route::resource('products', 'ProductController');
+
+
+              /**
+             * Rotas Categories
+             */
+            Route::any('categories/search', 'CategoryController@search')->name('categories.search');
+            Route::resource('categories', 'CategoryController');
+
+            /**
+             * Rotas User
+             */
+            Route::any('user/search', 'UserController@search')->name('users.search');
+            Route::resource('users', 'UserController');
+
+
             /**
              * Rotas profile Profile
              */

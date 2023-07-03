@@ -8,7 +8,6 @@ use App\Providers\RouteServiceProvider;
 use App\Services\TenantService;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -72,7 +71,7 @@ class RegisterController extends Controller
        if(!$plan = session('plan')){
            return redirect()->route('site.home')->with('message','por favor escolha um tema');
        } 
-        dd($plan);
+        
         $tenantService = app(TenantService::class);
         $user = $tenantService->make($plan, $data);
 
