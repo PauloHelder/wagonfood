@@ -4,16 +4,16 @@
 @section('content_header')
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{route('admin.index')}}">Dashboard</a></li>
-    <li class="breadcrumb-item"><a href="{{route('permissions.index')}}">Permissões</a></li>
+    <li class="breadcrumb-item"><a href="{{route('products.index')}}">Produtos</a></li>
 </ol>
-    <h1>Perfis de: <strong>{{$permission->name}}</strong>  
+    <h1>Categorias do: <strong>{{$product->title}}</strong>  
     </h1>
 @stop
 
 @section('content')
     <div class="card">
         <div class="card-header">
-            <form action="{{route('permissions.profiles.available',$permission->id)}}" method="POST" class="form form-inline">
+            <form action="{{route('products.categories.available',$product->id)}}" method="POST" class="form form-inline">
                 @csrf
                 <input type="text" name="filter" placeholder="Filtros" class="form-control" value="{{$filters['filter'] ?? ''}}">
                 <button type="submit" class="btn btn-info"> Pesquisar</button>
@@ -30,15 +30,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <form action="{{route('permissions.profiles.attach',$permission->id)}}" method="post">
+                    <form action="{{route('products.categories.attach',$product->id)}}" method="post">
                        @csrf
-                        @foreach ($profiles as $profile)
+                        @foreach ($categories as $category)
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="profiles[]" value="{{$profile->id}}">
+                                    <input type="checkbox" name="categories[]" value="{{$category->id}}">
                                 </td>
-                                <td>{{$profile->id}}</td>
-                                <td>{{$profile->name}}</td>
+                                <td>{{$category->id}}</td>
+                                <td>{{$category->name}}</td>
                                 
                                 
                             </tr>
@@ -55,9 +55,9 @@
         </div>
         <div class="card-footer">
             @if (isset($filters))
-            {!! $profiles->appends($filters)->links() !!}
+            {!! $categories->appends($filters)->links() !!}
             @else
-            {!! $profiles->links() !!}
+            {!! $categories->links() !!}
             @endif
             
         </div>

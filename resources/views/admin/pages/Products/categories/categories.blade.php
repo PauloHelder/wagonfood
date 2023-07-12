@@ -4,9 +4,9 @@
 @section('content_header')
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{route('admin.index')}}">Dashboard</a></li>
-    <li class="breadcrumb-item"><a href="{{route('permissions.index')}}">Permissões</a></li>
+    <li class="breadcrumb-item"><a href="{{route('products.index')}}">Produtos</a></li>
 </ol>
-    <h1>Perfis de: <strong>{{$permission->name}}</strong>  <a href="{{route('permissions.profiles.available',$permission->id)}}" class="btn btn-dark">
+    <h1>Categorias de: <strong>{{$product->title}}</strong>  <a href="{{route('products.categories.available',$product->id)}}" class="btn btn-dark">
         <i class="fas fa-solid fa-plus"></i></a>
     </h1>
 @stop
@@ -27,14 +27,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($profiles as $profile)
+                    @foreach ($categories as $category)
                         <tr>
-                            <td>{{$profile->id}}</td>
-                            <td>{{$profile->name}}</td>
+                            <td>{{$category->id}}</td>
+                            <td>{{$category->name}}</td>
                             
                             <td>
-                               {{-- <a href="{{route('details.profile.index', $profile->url)}}" class="btn btn-primary"><i class="fas fa-duotone fa-list"></i></a> --}} 
-                                <a href="{{route('permission.profile.detach', [$permission->id,$profile->id])}}" class="btn btn-danger"><i class="fas fa-solid fa-trash"></i></a>
+                                <a href="" class="btn btn-primary"><i class="fas fa-duotone fa-list"></i></a> 
+                                <a href="{{route('products.categories.detach', [$product->id,$category->id])}}" class="btn btn-danger"><i class="fas fa-solid fa-trash"></i></a> 
                             </td>
                         </tr>
                     @endforeach
@@ -44,9 +44,9 @@
         <div class="card-footer">
              
             @if (isset($filters))
-            {!! $profiles->appends($filters)->links() !!}
+            {!! $categories->appends($filters)->links() !!}
             @else
-            {!! $profiles->links() !!}
+            {!! $categories->links() !!}
             @endif
             
         </div>

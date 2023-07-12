@@ -4,8 +4,25 @@ Route::prefix('admin')
         ->namespace('Admin')
         ->group(function(){
 
+                Route::get('test-acl',function(){
+                        dd(auth()->user()->isAdmin());
+                });
+
+              /**
+             * Rotas Messas
+             */
+            Route::any('tables/search', 'TableController@search')->name('tables.search');
+            Route::resource('tables', 'TableController');   
              /**
-             * Rotas Produtsc
+             * Rotas categorias Produto
+             */
+            Route::get('product/{id}/categories/{idCategory}/detach', 'CategoryProductController@dettachCategoryProduct')->name('products.categories.detach');
+            Route::post('product/{id}/categories/store', 'CategoryProductController@attachCategoryProduct')->name('products.categories.attach');
+            Route::any('product/{id}/categories/create', 'CategoryProductController@categoriesAvailable')->name('products.categories.available');
+            Route::get('product/{id}/categories', 'CategoryProductController@categories')->name('products.categories');
+
+             /**
+             * Rotas Produtcs
              */
             Route::any('products/search', 'ProductController@search')->name('products.search');
             Route::resource('products', 'ProductController');

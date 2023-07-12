@@ -5,7 +5,7 @@
     <input type="file" name="image" class="form-control" placeholder="Image" value="{{$product->title ?? old('title')}}">
 </div>
 <div class="form-group">
-    <label for="name">* Nome:</label>
+    <label for="title">* Nome:</label>
     <input type="text" name="title" class="form-control" placeholder="Nome" value="{{$product->title ?? old('title')}}">
 </div>
 <div class="form-group">

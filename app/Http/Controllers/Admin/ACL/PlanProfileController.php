@@ -14,6 +14,8 @@ class PlanProfileController extends Controller
      {
         $this->plan     = $plan;
         $this->profile   = $profile;
+
+        
      }
 
      /**
@@ -93,7 +95,7 @@ class PlanProfileController extends Controller
     {
         $profile = $this->profile->find($idProfile);
         if(!$profile)
-            return redirect()->back()->with('error', 'PErfil não encontrado');
+            return redirect()->back()->with('error', 'Perfil não encontrado');
         
         $filters = $request->except('_token');
         $plans = $profile->plansAvailable($request->filter);

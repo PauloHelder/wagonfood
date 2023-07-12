@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUpdateProduct;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -14,6 +15,7 @@ class ProductController extends Controller
     public function __construct(Product $product)
     {
         $this->repository = $product;
+        $this->middleware('can:products');
     }
 
     public function index()
@@ -47,6 +49,7 @@ class ProductController extends Controller
         $tenant = auth()->user()->tenant;
 
         if($request->hasFile('image') && $request->image->isValid()){
+
             $data['image']=$request->image->store("tenants/{$tenant->uuid}/products");
 
         }
@@ -69,7 +72,7 @@ class ProductController extends Controller
      */
     public function show($uuid)
     {
-        if(!$product = $this->repository->where('url',$uuid)->first())
+        if(!$product = $this->repository->where('uuid',$uuid)->first())
             return redirect()->back()->with('error','Produto não encontrado');
 
         return  view('admin.pages.products.show',compact('product'));
@@ -105,6 +108,9 @@ class ProductController extends Controller
         $data = $request->all();
         $tenant = auth()->user()->tenant;
         if($request->hasFile('image') && $request->image->isValid()){
+            if(Storage::exists($product->image)){
+                Storage::delete($product->image);
+            }
             $data['image']=$request->image->store("tenants/{$tenant->uuid}/products");
 
         }
@@ -125,6 +131,10 @@ class ProductController extends Controller
     {
         if(!$product = $this->repository->where('uuid',$uuid)->first())
             return redirect()->back()->with('error','Produto  não encontrada');
+
+        if(Storage::exists($product->image)){
+            Storage::delete($product->image);
+        }
         $product->delete();
         return redirect()
                     ->route('products.index')

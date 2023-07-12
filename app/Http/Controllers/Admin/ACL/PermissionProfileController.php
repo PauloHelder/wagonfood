@@ -34,7 +34,7 @@ class PermissionProfileController extends Controller
             return redirect()->back()->with('error', 'Perfil não encontrado');
         
         $filters = $request->except('_token');
-        $permissions = $profile->permissionsAvailable($request->filter);
+        $permissions = $profile->permissionsAvailable($request->filters);
 
         return view('admin.pages.profiles.permissions.available', compact('permissions', 'profile', 'filters'));
     }

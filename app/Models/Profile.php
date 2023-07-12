@@ -12,11 +12,18 @@ class Profile extends Model
         'name',
         'description',
     ];
-    /**
+
+      /**
      * Get Permissions
      */
     public function plans(){
         return $this->BelongsToMany(Plan::class);
+    }
+    /**
+     * Get Permissions
+     */
+    public function permissions(){
+        return $this->BelongsToMany(Permission::class);
     }
     public function plansAvailable($filter = null){
         
@@ -31,6 +38,21 @@ class Profile extends Model
         })
         ->paginate();
         return $plans;
+    }
+
+    public function PermissionsAvailable($filter = null){
+        
+        $permission = Permission::whereNotIn('permissions.id', function($query){
+            $query->select('permission_profile.permission_id');
+            $query->from('permission_profile');
+            $query->whereRaw("permission_profile.profile_id={$this->id}");
+        })
+        ->where(function($queryFilter) use($filter){
+            if($filter)
+                $queryFilter->where('permission.name', 'LIKE', "%{$filter}%");
+        })
+        ->paginate();
+        return $permission;
     }
 
 }
