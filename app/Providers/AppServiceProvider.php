@@ -5,10 +5,14 @@ use App\Models\{
     Category,
     Plan, Product, Tenant
 };
-use App\Observers\CategoryObserver;
-use App\Observers\PlanObserver;
-use App\Observers\ProductObserver;
-use App\Observers\TenantObserver;
+use App\Observers\{
+    CategoryObserver,
+    PlanObserver,
+    ProductObserver,
+    TenantObserver,
+};
+
+
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -20,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+       //
     }
 
     /**

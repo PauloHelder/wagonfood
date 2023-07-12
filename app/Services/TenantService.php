@@ -3,10 +3,22 @@
 namespace App\Services;
 use Illuminate\Support\Str;
 use App\Models\Plan;
+use App\Repositories\Contracts\TenantRepositoryInterface;
 
 class TenantService
 {
-    private  $plan, $data;
+    private  $plan, $data, $repository;
+    
+
+    public function __construct(TenantRepositoryInterface $repository)
+    {
+        $this->repository = $repository;
+    }
+
+    public function getAllTenants() 
+    {
+        return $this->repository->getAllTenant();
+    }
 
     public function make(Plan $plan, $data){
         $this->plan = $plan;
