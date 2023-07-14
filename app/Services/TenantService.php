@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Services;
-use Illuminate\Support\Str;
 use App\Models\Plan;
 use App\Repositories\Contracts\TenantRepositoryInterface;
 
@@ -18,6 +17,11 @@ class TenantService
     public function getAllTenants() 
     {
         return $this->repository->getAllTenant();
+    }
+
+    public function getTenantsByUuid(String  $uuid) 
+    {
+        return $this->repository->getTenantByUuid($uuid);
     }
 
     public function make(Plan $plan, $data){
