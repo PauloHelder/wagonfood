@@ -15,7 +15,7 @@
                         <div class="price-value">
                             <span class="currency">R$</span>
                             <span class="amount">{{number_format($plan->price,2,',','.')}}</span>
-                            <span class="duration">Por Mês</span>
+                            <span class="duration">Por Mês definido</span>
                         </div>
                         <ul>
                             @foreach ($plan->details as $detail)
